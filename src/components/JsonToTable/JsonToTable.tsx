@@ -10,18 +10,37 @@ export interface IJsonToTableProps {
     styles?: any;
 }
 
+type State = {
+  json:any;
+}
+
 export default class JsonToTable extends React.Component<IJsonToTableProps,
-    {}> {
+    State> {
     // constructor
     constructor(props: any, context: any) {
         super(props, context);
+        this.state = {
+		 json:{}
+		}
     }
+
+
+  componentDidUpdate(prevProps) {
+    if (this.props.json!== prevProps.json) {
+      this.setState({json:this.props.json});
+     }
+   }
+
+  componentDidMount() {
+	    this.setState({json:this.props.json});
+  }
+
 
     public render() {
         return (
             <div className={'json-to-table'}>
                 <table key={`__j2t_root_table`}>
-                    <tbody key={`__j2t_root_tbody`}>{this.renderObject(this.props.json, undefined, 0)}</tbody>
+                    <tbody key={`__j2t_root_tbody`}>{this.renderObject(this.state.json, undefined, 0)}</tbody>
                 </table>
             </div>
         );
